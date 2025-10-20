@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hash-generator-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hash-generator
+  template:
+    metadata:
+      labels:
+        app: hash-generator
+    spec:
+      containers:
+        - name: hash-generator
+          image: noussairel/hash-generator:1.1
