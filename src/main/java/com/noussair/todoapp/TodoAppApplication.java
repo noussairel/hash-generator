@@ -9,6 +9,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,11 +34,11 @@ public class TodoAppApplication {
         logger.info("server Started in port {}", port);
     }
 
-    @RestController
+    @Controller
     static class RootController{
         @GetMapping("/")
         public String root(){
-            return "todo app";
+            return "forward:/index.html";
         }
     }
 
