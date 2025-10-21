@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @SpringBootApplication
@@ -36,9 +36,25 @@ public class TodoAppApplication {
 
     @Controller
     static class RootController{
+        private final PeriodicLogger periodicLogger;
+        private final RandomIdService randomIdService;
+
+        RootController(PeriodicLogger periodicLogger, RandomIdService randomIdService) {
+            this.periodicLogger = periodicLogger;
+            this.randomIdService = randomIdService;
+        }
+
+
         @GetMapping("/")
         public String root(){
             return "forward:/index.html";
+        }
+
+        @GetMapping("/hashcode")
+        @ResponseBody
+        public String getHashCode(){
+            periodicLogger.logId();
+            return randomIdService.getId();
         }
     }
 
